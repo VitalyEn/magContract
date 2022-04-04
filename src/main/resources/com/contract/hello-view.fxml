@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="BOTTOM_RIGHT" prefHeight="633.0" prefWidth="682.0" spacing="20.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.contract.FormController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <ToolBar prefHeight="40.0" prefWidth="200.0">
+        <Button fx:id="templateButton" mnemonicParsing="false" onAction="#onTemplateButtonClick"
+                text="Выбор шаблона DOCX"/>
+        <Button fx:id="listButton" mnemonicParsing="false" onAction="#onListButtonClick" text="Выбор списка CSV"/>
+    </ToolBar>
+   <TextField fx:id="listTemplate" />
+   <TextField fx:id="listItem" />
+   <ButtonBar prefHeight="40.0" prefWidth="200.0">
+     <buttons>
+         <Label text="Выбор записи:" />
+         <Button fx:id="prevButton" mnemonicParsing="false" onAction="#onPrevButtonClick" text="Предыдущая" />
+         <Label fx:id="numberLabel" alignment="TOP_LEFT" text="Запись №1" />
+       <Button fx:id="nextButton" mnemonicParsing="false" onAction="#onNextButtonClick" text="Следующая" />
+     </buttons>
+   </ButtonBar>
+   <Label text="Шаблон" />
+   <TextArea fx:id="templateText" />
+   <Label text="Готовый документ" />
+   <TextArea fx:id="resultText" prefHeight="200.0" prefWidth="200.0" />
+    <Button fx:id="saveButton" alignment="BOTTOM_RIGHT" cacheShape="false" centerShape="false" focusTraversable="false" onAction="#onSaveButtonClick" text="Сохранить документ" />
+
+    <Label fx:id="welcomeText" />
+</VBox>
