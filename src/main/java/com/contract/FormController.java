@@ -2,12 +2,12 @@ package com.contract;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class FormController implements Initializable {
@@ -17,6 +17,8 @@ public class FormController implements Initializable {
     public TextField listTemplate;
     @FXML
     public Label numberLabel;
+    @FXML
+    public TableView tableTemplate;
     @FXML
     private TextArea resultText;
     @FXML
@@ -28,6 +30,17 @@ public class FormController implements Initializable {
     public void initialize(URL location, ResourceBundle resources){
         //Создание нового контроллера
         controller = new Controller();
+        // столбец для вывода имени
+        TableColumn<FileIo, String> tableColumn =  new TableColumn<FileIo, String>("Name");
+        // определяем фабрику для столбца с привязкой к свойству name
+        // добавляем столбец
+        tableColumn.setCellValueFactory(new PropertyValueFactory<FileIo, String>("name"));
+        tableTemplate.getColumns().add(tableColumn);
+        tableColumn = new TableColumn<>("2");
+        tableColumn.setCellValueFactory(new PropertyValueFactory<FileIo, String>("name"));
+        tableTemplate.getColumns().add(tableColumn);
+
+        // tableTemplate.getColumns().add(nameColumn);
     }
 
     @FXML //Обработка кнопки "Сохранить результат"
@@ -35,7 +48,7 @@ public class FormController implements Initializable {
         resultText.setText(controller.saveResultText());
     }
     @FXML //Обработка кнопки "Загрузить шаблон"
-    protected void onTemplateButtonClick() throws IOException {
+    protected void onTemplateButtonClick() {
         templateText.setText(controller.readTemplate());
     }
     @FXML //Обработка кнопки "Загрузить список"
@@ -57,5 +70,9 @@ public class FormController implements Initializable {
         controller.setListNumber(controller.getListItemNumber() + 1);
         listItem.setText(controller.readListItem());
         numberLabel.setText("Запись №"+controller.getListItemNumber());
+    }
+    @FXML
+    protected void onExcelTest(){
+        new ExcelDocument().parse("test.xlsx");
     }
 }
