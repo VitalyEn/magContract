@@ -67,15 +67,21 @@ public class FormController implements Initializable {
 
     private void tableLoad(){
         controller.loadExelHeaders();
-        TableColumn<FileIo, String> tableColumn =  new TableColumn<FileIo, String>(controller.getDataTemplateCell(0));
+        int i = 0;
+        TableColumn<FileIo, String> tableColumn;
+        while (controller.getDataTemplateCell(i)!=null) {
+           tableColumn = new TableColumn<FileIo, String>(controller.getDataTemplateCell(i));
+           tableTemplate.getColumns().add(tableColumn);
+            i++;
+        }
         // определяем фабрику для столбца с привязкой к свойству name
         // добавляем столбец
-        tableColumn.setCellValueFactory(new PropertyValueFactory<FileIo, String>("name"));
-        tableTemplate.getColumns().add(tableColumn);
+        //tableColumn.setCellValueFactory(new PropertyValueFactory<FileIo, String>("name"));
+        //tableTemplate.getColumns().add(tableColumn);
 
-        tableColumn = new TableColumn<>("2");
-        tableColumn.setCellValueFactory(new PropertyValueFactory<FileIo, String>("name"));
-        tableTemplate.getColumns().add(tableColumn);
+        //tableColumn = new TableColumn<>("2");
+       // tableColumn.setCellValueFactory(new PropertyValueFactory<FileIo, String>("name"));
+        //tableTemplate.getColumns().add(tableColumn);
 
         // tableTemplate.getColumns().add(nameColumn);
     }

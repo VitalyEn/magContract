@@ -55,6 +55,8 @@ public class Controller {
     }
 
     public String getDataTemplateCell(int i) {
-        return dataTemplate.get(i);
+        if (i > dataTemplate.size()-1)
+            return null;
+        else return dataTemplate.get(i);
     }
 }
