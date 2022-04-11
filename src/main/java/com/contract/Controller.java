@@ -2,18 +2,21 @@ package com.contract;
 
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Controller {
-    private FileIo csv;
+    //private FileIo exelFile;
+    private ExcelDocument exelFile;
     private WordDocument doc;
-    private String dataTemplate;
-    private String dataList;
+    private ArrayList<String> dataTemplate;
+    private ArrayList<String> dataList;
     private int listItemNumber;
 
-    public Controller(String csv, String doc) {
+  /*  public Controller(String exelFile, String doc) {
         this.doc = new WordDocument(doc);
-        this.csv = new FileIo(csv);
-    }
+        //this.exelFile = new FileIo(exelFile);
+        this.exelFile = new ExcelDocument(exelFile);
+    }*/
 
     public Controller(){
     }
@@ -32,35 +35,26 @@ public class Controller {
         return doc.getDocText();
     }
 
-    public String saveResultText() throws IOException {
-        return doc.replaceAndWrite(dataTemplate.split(";"),dataList.split(";"), this.listItemNumber);
+   // public String saveResultText() throws IOException {
+       // return doc.replaceAndWrite(dataTemplate.split(";"),dataList.split(";"), this.listItemNumber);
 
         //System.out.println("Сохранить");
+    //}
+
+    public void loadExelFile(){
+        this.exelFile = new ExcelDocument();
     }
 
-    public String readListItem() {
-        dataList = csv.getFileContent(listItemNumber);
-        //System.out.println(dataList);
-        return dataList;
-    }
-
-    public void openCsvFile(){
-        this.csv = new FileIo();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Текст с разделителями ';', csv","csv");
-        csv.chooseFile(filter);
-        csv.readFromFileToList();
-        this.dataTemplate = csv.getFileContent(0);
+    public void loadExelHeaders(){
+        exelFile.parse();
+        dataTemplate = exelFile.getHeaderList();
     }
 
     public int getListItemNumber(){
         return this.listItemNumber;
     }
 
-    public void setListNumber(int i) {
-       if (i < 0){i = 0;}
-        if(i > csv.getContentSize()-1){
-            i = csv.getContentSize()-1;
-        }
-        this.listItemNumber = i;
+    public String getDataTemplateCell(int i) {
+        return dataTemplate.get(i);
     }
 }
