@@ -1,37 +1,30 @@
 package com.contract;
 
-import javafx.scene.control.Cell;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
 
-public class ExcelDocument {
+public class ExcelDocument extends FileIo{
     private final String exelFile;
-    private ArrayList headerList = new ArrayList();
+    private ArrayList headerRow = new ArrayList();
+    private ArrayList listRow = new ArrayList();
     private ArrayList row = new ArrayList<>();
-    private ArrayList listRow = new ArrayList<>();
+   // private ArrayList listRow = new ArrayList<>();
+    private ArrayList<String> list;
 
     public ExcelDocument() {
-        FileIo file = new FileIo();
+        //FileIo file = new FileIo();
         FileNameExtensionFilter filter = new FileNameExtensionFilter( "Документ MS Exel, xlsx","xlsx");
-        file.chooseFile(filter);
-        this.exelFile = file.getFileName();
+        this.chooseFile(filter);
+        this.exelFile = this.getFileName();
     }
 
-    public void parse() {
+    public ArrayList parse(int row) {
             String result = "";
             InputStream in = null;
             XSSFWorkbook wb = null;
@@ -47,16 +40,24 @@ public class ExcelDocument {
             String cell;
             //String cell = wb.getSheet(sheetName).getRow(0).getCell(i).toString();
            //System.out.println(cell);
-            while (wb.getSheet(sheetName).getRow(0).getCell(i) != null){
-                    cell = wb.getSheet(sheetName).getRow(0).getCell(i).toString();
+            while (wb.getSheet(sheetName).getRow(row).getCell(i) != null){
+                    cell = wb.getSheet(sheetName).getRow(row).getCell(i).toString();
                 //System.out.println(cell);
                 i++;
-                this.headerList.add(cell);
+                this.listRow.add(cell);
             }
+
+            return listRow;
     }
 
-    public ArrayList<String> getHeaderList() {
-        return headerList;
+    public ArrayList<String> getHeaderRow() {
+        headerRow = this.parse(0);
+        //System.out.println(headerRow.get(0));
+        return headerRow;
+    }
+
+    public ArrayList<String> getRow(Integer row) {
+        return this.parse(row);
     }
 }
 

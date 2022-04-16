@@ -11,21 +11,16 @@
     <ToolBar prefHeight="40.0" prefWidth="200.0">
         <Button fx:id="templateButton" mnemonicParsing="false" onAction="#onTemplateButtonClick" text="Выбор шаблона DOCX" />
         <Button fx:id="listButton" mnemonicParsing="false" onAction="#onListButtonClick" text="Выбор списка CSV" />
-      <Button fx:id="excelTest" mnemonicParsing="false" onAction="#onExcelTest" text="Excel Test" />
+      <!--<Button fx:id="excelTest" mnemonicParsing="false" onAction="#onExcelTest" text="Excel Test" />-->
     </ToolBar>
    <TableView fx:id="tableTemplate" prefHeight="200.0" prefWidth="200.0">
       <columnResizePolicy>
          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
       </columnResizePolicy>
    </TableView>
-   <TextField fx:id="listTemplate" />
-   <TextField fx:id="listItem" />
    <ButtonBar prefHeight="40.0" prefWidth="200.0">
      <buttons>
-         <Label text="Выбор записи:" />
-         <Button fx:id="prevButton" mnemonicParsing="false" onAction="#onPrevButtonClick" text="Предыдущая" />
          <Label fx:id="numberLabel" alignment="TOP_LEFT" text="Запись №1" />
-       <Button fx:id="nextButton" mnemonicParsing="false" onAction="#onNextButtonClick" text="Следующая" />
      </buttons>
    </ButtonBar>
    <Label text="Шаблон" />

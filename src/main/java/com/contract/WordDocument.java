@@ -12,7 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-public class WordDocument {
+public class WordDocument extends FileIo{
     private String docText;
     private String docFileName;
 
@@ -21,10 +21,10 @@ public class WordDocument {
     }
 
     public WordDocument(){
-        FileIo file = new FileIo();
+        //FileIo file = new FileIo();
         FileNameExtensionFilter filter = new FileNameExtensionFilter( "Документ MS Word, docx","docx");
-        file.chooseFile(filter);
-        this.docFileName = file.getFileName();
+        this.chooseFile(filter);
+        this.docFileName = this.getFileName();
     }
 
     public void setDocText(String docText){
