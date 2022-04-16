@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
 import java.net.URL;
@@ -15,7 +16,7 @@ import java.util.ResourceBundle;
 
 public class FormController implements Initializable {
     public ObservableList<Data> opData = FXCollections.observableArrayList();
-    HashMap<String, Object> properties = new HashMap<>();
+
     @FXML
     public TextField listItem;
     @FXML
@@ -23,120 +24,96 @@ public class FormController implements Initializable {
     @FXML
     public Label numberLabel;
     @FXML
-    public TableView tableTemplate;
+    public TableView<Data> tableTemplate;
+    @FXML
+    TableColumn<Data, String> tableColumn;
     @FXML
     private TextArea resultText;
     @FXML
     private TextArea templateText;
-   //Controller controller;
+    //Controller controller;
 
     private ExcelDocument exelFile;
     private WordDocument doc;
     private ArrayList<String> dataTemplate;
+    private ArrayList<String> columnNames;
     private ArrayList<String> dataList;
-    private int listItemNumber;
 
     //Инициализация при загрузке формы
     @Override
-    public void initialize(URL location, ResourceBundle resources){
+    public void initialize(URL location, ResourceBundle resources) {
         //Создание нового контроллера
-       // controller = new Controller();
+        // controller = new Controller();
         // столбец для вывода имени
     }
 
     @FXML //Обработка кнопки "Сохранить результат"
     protected void onSaveButtonClick() throws IOException {
-       // resultText.setText(controller.saveResultText());
+        // resultText.setText(controller.saveResultText());
     }
+
     @FXML //Обработка кнопки "Загрузить шаблон"
     protected void onTemplateButtonClick() {
         templateText.setText(this.readTemplate());
     }
+
     @FXML //Обработка кнопки "Загрузить список"
-    protected void onListButtonClick(){
-        this.loadExelFile();
+    protected void onListButtonClick() {
         this.tableLoad();
     }
+    //Загрузка таблицы
+    @FXML
+    private void tableLoad() {
 
-
-    private void tableLoad(){
+        // Очистка таблицы
         tableTemplate.getColumns().clear();
-        this.loadExelData();
-        int i = 0;
-        TableColumn<Data, String> tableColumn;
-
-        //Add properties
-        //for (i = 0; i < this.dataTemplate.size(); i++){
-        //properties.put("name", "John Doe");
-        //properties.put("age", 25);
-
-
-
-        while (this.getDataTemplateCell(i)!=null) {
-           tableColumn = new TableColumn<>(this.getDataTemplateCell(i));
-           tableTemplate.getColumns().add(tableColumn);
-           //tableColumn.setCellValueFactory(new PropertyValueFactory<>(controller.getDataTemplateCell(i)));
-           //opData.add(this.getDataTemplate());
-
-           //tableTemplate.getItems().add(0,"hhhhh");
-
-           i++;
+        // Открытие нового докусента Exel (только первый лист!)
+        ExcelDocument exel = new ExcelDocument();
+        // Чтение строки заголовков
+        dataTemplate = exel.readRow(0);
+        // Загрузка заголовков в таблицу формы
+        for(int i = 0; i < dataTemplate.size(); i++) {
+            tableColumn = new TableColumn<Data, String>(dataTemplate.get(i));
+            tableTemplate.getColumns().add(tableColumn);
+            tableColumn.setCellValueFactory((new PropertyValueFactory<>(dataTemplate.get(i))));
+            //tableColumn.setCellValueFactory((new PropertyValueFactory<>("Фамилия")));
+            //TableColumn<UserAccount, String> firstNameCol = new TableColumn<UserAccount, String>("First Name");
         }
 
-        for (i = 1; i < dataTemplate.size(); i++){
-           // properties.put(dataTemplate.get(i), exelFile.getRow(i));
-            System.out.println(dataTemplate.get(i) + "  " + exelFile.getRow(i).get(i));
+        // Загрузка строк из файла в объект Data
+        int row = 1;
+        while (exel.readRow(row) != null){
+            HashMap<String, Object> properties = new HashMap<>();
+            System.out.println(exel.readRow(row));
+
+            for (int cell = 0; cell < dataTemplate.size(); cell++){
+                properties.put(dataTemplate.get(cell),exel.readRow(row).get(cell));
+            }
+            opData.add(new Data(properties));
+            row++;
         }
-        Data person = new Data(properties);
-        opData.add(person);
         tableTemplate.setItems(opData);
-        System.out.println(this.getDataTemplateCell(1));
 
-        //tableTemplate.getItems().add(0,controller.getDataTemplateCell(1));
-        // определяем фабрику для столбца с привязкой к свойству name
-        // добавляем столбец
-        //tableColumn.setCellValueFactory(new PropertyValueFactory<FileIo, String>("name"));
-        //tableTemplate.getColumns().add(tableColumn);
+
+            //userNameCol.setCellValueFactory(new PropertyValueFactory<>("userName"));
+
+
     }
 
 
     //из класса Controller
-    public String readTemplate(){
+    public String readTemplate() {
         this.doc = new WordDocument();
         return doc.getDocFromFile();
     }
 
-    public void replace(){
+    public void replace() {
         doc.getDocFromFile();
     }
 
-    public String readSource(){
+    public String readSource() {
         doc.getDocFromFile();
         return doc.getDocText();
-    }
-
-    public void loadExelFile(){
-        this.exelFile = new ExcelDocument();
-        //this.loadExelData();
-    }
-
-    public void loadExelData(){
-        dataTemplate = exelFile.getHeaderRow();
-        //dataList = exelFile.getList();
-    }
-
-    public int getListItemNumber(){
-        return this.listItemNumber;
-    }
-
-    public String getDataTemplateCell(int i) {
-        if (i > dataTemplate.size()-1)
-            return null;
-        else return dataTemplate.get(i);
-    }
-
-    public ArrayList getDataTemplate(){
-        return this.dataTemplate;
     }
 }
 
