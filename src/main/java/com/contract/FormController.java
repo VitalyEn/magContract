@@ -26,6 +26,45 @@ public class FormController implements Initializable {
     @FXML
     public TableView<Data> tableTemplate;
     @FXML
+    public TableColumn<Accaunt, Integer> id;
+    @FXML
+    public TableColumn<Accaunt,String> firstName;
+    @FXML
+    public TableColumn<Accaunt,String> secondName;
+    @FXML
+    public TableColumn<Accaunt,String> fathersName;
+    @FXML
+    public TableColumn<Accaunt,String> birthDate;
+    @FXML
+    public TableColumn<Accaunt,String> birthPlace;
+    @FXML
+    public TableColumn<Accaunt,String> flat;
+    @FXML
+    public TableColumn<Accaunt,String> square;
+    @FXML
+    public TableColumn<Accaunt,String> sertNumber;
+    @FXML
+    public TableColumn<Accaunt,String> regDate;
+    @FXML
+    public TableColumn<Accaunt,String> passportSerie;
+    @FXML
+    public TableColumn<Accaunt,String> passportNumber;
+    @FXML
+    public TableColumn<Accaunt,String> passportOutput;
+    @FXML
+    public TableColumn<Accaunt,String> passportCode;
+    @FXML
+    public TableColumn<Accaunt,String> regAdress;
+    @FXML
+    public TableColumn<Accaunt,String> liveAdress;
+    @FXML
+    public TableColumn<Accaunt,String> phone;
+    @FXML
+    public TableColumn<Accaunt,String> mail;
+    @FXML
+    public TableColumn<Accaunt,String> gasService;
+
+    @FXML
     TableColumn<Data, String> tableColumn;
     @FXML
     private TextArea resultText;
