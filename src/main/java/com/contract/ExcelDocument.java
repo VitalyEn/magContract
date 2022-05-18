@@ -11,11 +11,7 @@ import java.util.ArrayList;
 
 public class ExcelDocument extends FileIo{
     private final String exelFile;
-    private ArrayList headerRow = new ArrayList();
     private ArrayList listRow = new ArrayList();
-    private ArrayList row = new ArrayList<>();
-   // private ArrayList listRow = new ArrayList<>();
-    private ArrayList<String> list;
 
     public ExcelDocument() {
         //FileIo file = new FileIo();
@@ -24,10 +20,11 @@ public class ExcelDocument extends FileIo{
         this.exelFile = this.getFileName();
     }
 
-    public ArrayList parse(int row) {
-            String result = "";
+    public ArrayList readRow(int row) {
+            //String result = "";
             InputStream in = null;
             XSSFWorkbook wb = null;
+            this.listRow.clear();
             //System.out.println(name);
             try {
                 in = Files.newInputStream(Paths.get(this.exelFile));
@@ -40,24 +37,17 @@ public class ExcelDocument extends FileIo{
             String cell;
             //String cell = wb.getSheet(sheetName).getRow(0).getCell(i).toString();
            //System.out.println(cell);
+        if(wb.getSheet(sheetName).getRow(row) == null) return null;
             while (wb.getSheet(sheetName).getRow(row).getCell(i) != null){
                     cell = wb.getSheet(sheetName).getRow(row).getCell(i).toString();
+
                 //System.out.println(cell);
                 i++;
                 this.listRow.add(cell);
+                //System.out.println(row);
+                ///System.out.println(listRow);
             }
-
             return listRow;
-    }
-
-    public ArrayList<String> getHeaderRow() {
-        headerRow = this.parse(0);
-        //System.out.println(headerRow.get(0));
-        return headerRow;
-    }
-
-    public ArrayList<String> getRow(Integer row) {
-        return this.parse(row);
     }
 }
 
