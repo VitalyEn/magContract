@@ -17,6 +17,27 @@
       <columnResizePolicy>
          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
       </columnResizePolicy>
+      <columns>
+         <TableColumn fx:id="tableId" prefWidth="30.0" text="№" />
+         <TableColumn fx:id="tableFirstName" prefWidth="75.0" text="Фамилия" />
+         <TableColumn fx:id="tableSecondName" prefWidth="75.0" text="Имя" />
+         <TableColumn fx:id="tableFathersName" prefWidth="75.0" text="Отчество" />
+         <TableColumn fx:id="tableBirthDate" prefWidth="75.0" text="Дата рождения" />
+         <TableColumn fx:id="tableBirthPlace" prefWidth="75.0" text="Место рождения" />
+         <TableColumn fx:id="tableFlat" prefWidth="75.0" text="№ Квартиры" />
+         <TableColumn fx:id="tableSquare" prefWidth="75.0" text="Площадь" />
+         <TableColumn fx:id="tableSertNumber" prefWidth="75.0" text="№ свидетельства" />
+         <TableColumn fx:id="tableRegDate" prefWidth="75.0" text="Дата регистрации" />
+          <TableColumn fx:id="tablePassportSerie" prefWidth="75.0" text="Серия паспорта" />
+          <TableColumn fx:id="tablePassportNumber" prefWidth="75.0" text="№ паспорта" />
+          <TableColumn fx:id="tablePassportOutput" prefWidth="75.0" text="Дата выдачи" />
+          <TableColumn fx:id="tablePassportCode" prefWidth="75.0" text="Код подразделения" />
+          <TableColumn fx:id="tableRegAdress" prefWidth="75.0" text="Адрес регистрации" />
+          <TableColumn fx:id="tableLiveAdress" prefWidth="75.0" text="Адрес проживания" />
+          <TableColumn fx:id="tablePhone" prefWidth="75.0" text="№ телефона" />
+          <TableColumn fx:id="tableMail" prefWidth="75.0" text="E-mail" />
+          <TableColumn fx:id="tableGasService" prefWidth="75.0" text="ТО по газу" />
+      </columns>
    </TableView>
    <ButtonBar prefHeight="40.0" prefWidth="200.0">
      <buttons>

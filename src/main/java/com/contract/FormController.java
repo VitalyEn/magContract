@@ -10,67 +10,79 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 public class FormController implements Initializable {
-    public ObservableList<Data> opData = FXCollections.observableArrayList();
+    public ObservableList<Accaunt> opData = FXCollections.observableArrayList();
+    private Integer id;
+    private String firstName;
+    private String secondName;
+    private String fathersName;
+    private String birthDate;
+    private String birthPlace;
+    private String flat;
+    private String square;
+    private String sertNumber;
+    private String regDate;
+    private String passportSerie;
+    private String passportNumber;
+    private String passportOutput;
+    private String passportCode;
+    private String regAdress;
+    private String liveAdress;
+    private String phone;
+    private String mail;
+    private String gasService;
 
-    @FXML
-    public TextField listItem;
-    @FXML
-    public TextField listTemplate;
     @FXML
     public Label numberLabel;
     @FXML
-    public TableView<Data> tableTemplate;
+    public TableView<Accaunt> tableTemplate;
     @FXML
-    public TableColumn<Accaunt, Integer> id;
+    public TableColumn<Accaunt,Integer> tableId;
     @FXML
-    public TableColumn<Accaunt,String> firstName;
+    public TableColumn<Accaunt,String> tableFirstName;
     @FXML
-    public TableColumn<Accaunt,String> secondName;
+    public TableColumn<Accaunt,String> tableSecondName;
     @FXML
-    public TableColumn<Accaunt,String> fathersName;
+    public TableColumn<Accaunt,String> tableFathersName;
     @FXML
-    public TableColumn<Accaunt,String> birthDate;
+    public TableColumn<Accaunt,String> tableBirthDate;
     @FXML
-    public TableColumn<Accaunt,String> birthPlace;
+    public TableColumn<Accaunt,String> tableBirthPlace;
     @FXML
-    public TableColumn<Accaunt,String> flat;
+    public TableColumn<Accaunt,String> tableFlat;
     @FXML
-    public TableColumn<Accaunt,String> square;
+    public TableColumn<Accaunt,String> tableSquare;
     @FXML
-    public TableColumn<Accaunt,String> sertNumber;
+    public TableColumn<Accaunt,String> tableSertNumber;
     @FXML
-    public TableColumn<Accaunt,String> regDate;
+    public TableColumn<Accaunt,String> tableRegDate;
     @FXML
-    public TableColumn<Accaunt,String> passportSerie;
+    public TableColumn<Accaunt,String> tablePassportSerie;
     @FXML
-    public TableColumn<Accaunt,String> passportNumber;
+    public TableColumn<Accaunt,String> tablePassportNumber;
     @FXML
-    public TableColumn<Accaunt,String> passportOutput;
+    public TableColumn<Accaunt,String> tablePassportOutput;
     @FXML
-    public TableColumn<Accaunt,String> passportCode;
+    public TableColumn<Accaunt,String> tablePassportCode;
     @FXML
-    public TableColumn<Accaunt,String> regAdress;
+    public TableColumn<Accaunt,String> tableRegAdress;
     @FXML
-    public TableColumn<Accaunt,String> liveAdress;
+    public TableColumn<Accaunt,String> tableLiveAdress;
     @FXML
-    public TableColumn<Accaunt,String> phone;
+    public TableColumn<Accaunt,String> tablePhone;
     @FXML
-    public TableColumn<Accaunt,String> mail;
+    public TableColumn<Accaunt,String> tableMail;
     @FXML
-    public TableColumn<Accaunt,String> gasService;
+    public TableColumn<Accaunt,String> tableGasService;
 
     @FXML
-    TableColumn<Data, String> tableColumn;
+    TableColumn<Accaunt, String> tableColumn;
     @FXML
     private TextArea resultText;
     @FXML
     private TextArea templateText;
-    //Controller controller;
 
     private ExcelDocument exelFile;
     private WordDocument doc;
@@ -81,14 +93,35 @@ public class FormController implements Initializable {
     //Инициализация при загрузке формы
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //Создание нового контроллера
-        // controller = new Controller();
-        // столбец для вывода имени
+        tableId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tableFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        tableSecondName.setCellValueFactory(new PropertyValueFactory<>("secondName"));
+        tableFathersName.setCellValueFactory(new PropertyValueFactory<>("fathersName"));
+        tableId.setCellValueFactory(new PropertyValueFactory<>("id"));
+       /* private Integer id;
+        private String firstName;
+        private String secondName;
+        private String fathersName;
+        private String birthDate;
+        private String birthPlace;
+        private String flat;
+        private String square;
+        private String sertNumber;
+        private String regDate;
+        private String passportSerie;
+        private String passportNumber;
+        private String passportOutput;
+        private String passportCode;
+        private String regAdress;
+        private String liveAdress;
+        private String phone;
+        private String mail;
+        private String gasService;*/
     }
 
     @FXML //Обработка кнопки "Сохранить результат"
     protected void onSaveButtonClick() throws IOException {
-        // resultText.setText(controller.saveResultText());
+
     }
 
     @FXML //Обработка кнопки "Загрузить шаблон"
@@ -103,40 +136,53 @@ public class FormController implements Initializable {
     //Загрузка таблицы
     @FXML
     private void tableLoad() {
-
-        // Очистка таблицы
-        tableTemplate.getColumns().clear();
         // Открытие нового докусента Exel (только первый лист!)
         ExcelDocument exel = new ExcelDocument();
-        // Чтение строки заголовков
-        dataTemplate = exel.readRow(0);
-        // Загрузка заголовков в таблицу формы
-        for(int i = 0; i < dataTemplate.size(); i++) {
-            tableColumn = new TableColumn<Data, String>(dataTemplate.get(i));
-            tableTemplate.getColumns().add(tableColumn);
-            tableColumn.setCellValueFactory((new PropertyValueFactory<>(dataTemplate.get(i))));
-            //tableColumn.setCellValueFactory((new PropertyValueFactory<>("Фамилия")));
-            //TableColumn<UserAccount, String> firstNameCol = new TableColumn<UserAccount, String>("First Name");
-        }
+        dataTemplate = exel.readRow(1);
+        this.id = 1;
+        this.firstName = dataTemplate.get(0);
+        this.secondName = dataTemplate.get(1);
+        this.fathersName = dataTemplate.get(2);
+        this.birthDate = dataTemplate.get(3);
+        this.birthPlace = dataTemplate.get(4);
+        this.flat = dataTemplate.get(5);
+        this.square = dataTemplate.get(6);
+        this.sertNumber = dataTemplate.get(7);
+        this.regDate = dataTemplate.get(8);
+        this.passportSerie = dataTemplate.get(9);
+        this.passportNumber = dataTemplate.get(10);
+        this.passportOutput = dataTemplate.get(11);
+        this.passportCode = dataTemplate.get(12);
+        //this.regAdress = dataTemplate.get(14);
+        //this.liveAdress = dataTemplate.get(15);
+        //this.phone = dataTemplate.get(16);
+        //this.mail = dataTemplate.get(17);
+        //this.gasService = dataTemplate.get(18);
 
-        // Загрузка строк из файла в объект Data
-        int row = 1;
-        while (exel.readRow(row) != null){
-            HashMap<String, Object> properties = new HashMap<>();
-            System.out.println(exel.readRow(row));
-
-            for (int cell = 0; cell < dataTemplate.size(); cell++){
-                properties.put(dataTemplate.get(cell),exel.readRow(row).get(cell));
-            }
-            opData.add(new Data(properties));
-            row++;
-        }
+        initData();
         tableTemplate.setItems(opData);
+    }
 
-
-            //userNameCol.setCellValueFactory(new PropertyValueFactory<>("userName"));
-
-
+    private void initData() {
+        opData.add(new Accaunt(id,
+                firstName,
+                secondName,
+                fathersName,
+                birthDate,
+                birthPlace,
+                flat,
+                square,
+                sertNumber,
+                regDate,
+                passportSerie,
+                passportNumber,
+                passportOutput,
+                passportCode,
+                regAdress,
+                liveAdress,
+                phone,
+                mail,
+                gasService));
     }
 
 

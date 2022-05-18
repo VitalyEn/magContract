@@ -1,7 +1,11 @@
 package com.contract;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.StringProperty;
+
 public class Accaunt {
-    private int id;
+    private Integer id;
     private String firstName;
     private String secondName;
     private String fathersName;
@@ -21,7 +25,7 @@ public class Accaunt {
     private String mail;
     private String gasService;
 
-    public Accaunt(int id,
+    public Accaunt(Integer id,
                    String firstName,
                    String secondName,
                    String fathersName,
@@ -59,5 +63,81 @@ public class Accaunt {
         this.phone = phone;
         this.mail = mail;
         this.gasService = gasService;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getFathersName() {
+        return fathersName;
+    }
+
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public String getBirthPlace() {
+        return birthPlace;
+    }
+
+    public String getFlat() {
+        return flat;
+    }
+
+    public String getSquare() {
+        return square;
+    }
+
+    public String getSertNumber() {
+        return sertNumber;
+    }
+
+    public String getRegDate() {
+        return regDate;
+    }
+
+    public String getPassportSerie() {
+        return passportSerie;
+    }
+
+    public String getPassportNumber() {
+        return passportNumber;
+    }
+
+    public String getPassportOutput() {
+        return passportOutput;
+    }
+
+    public String getPassportCode() {
+        return passportCode;
+    }
+
+    public String getRegAdress() {
+        return regAdress;
+    }
+
+    public String getLiveAdress() {
+        return liveAdress;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public String getGasService() {
+        return gasService;
     }
 }
