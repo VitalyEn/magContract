@@ -20,7 +20,7 @@ public class ExcelDocument extends FileIo{
         this.exelFile = this.getFileName();
     }
 
-    public ArrayList readRow(int row) {
+    public ArrayList readRow(int row, int rowLength) {
             //String result = "";
             InputStream in = null;
             XSSFWorkbook wb = null;
@@ -38,14 +38,16 @@ public class ExcelDocument extends FileIo{
             //String cell = wb.getSheet(sheetName).getRow(0).getCell(i).toString();
            //System.out.println(cell);
         if(wb.getSheet(sheetName).getRow(row) == null) return null;
-            while (wb.getSheet(sheetName).getRow(row).getCell(i) != null){
+            for (i = 0; i < rowLength; i++){
+                if (wb.getSheet(sheetName).getRow(row).getCell(i) == null) cell = "";
+                else
                     cell = wb.getSheet(sheetName).getRow(row).getCell(i).toString();
 
-                //System.out.println(cell);
-                i++;
-                this.listRow.add(cell);
-                //System.out.println(row);
-                ///System.out.println(listRow);
+                    //System.out.println(cell);
+                    this.listRow.add(cell);
+                    //System.out.println(row);
+                    ///System.out.println(listRow);
+
             }
             return listRow;
     }

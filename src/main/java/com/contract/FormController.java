@@ -35,7 +35,7 @@ public class FormController implements Initializable {
     private String gasService;
 
     @FXML
-    public Label numberLabel;
+    public Label onSaveText;
     @FXML
     public TableView<Accaunt> tableTemplate;
     @FXML
@@ -89,6 +89,8 @@ public class FormController implements Initializable {
     private ArrayList<String> dataTemplate;
     private ArrayList<String> columnNames;
     private ArrayList<String> dataList;
+    private int rowSize = 18;
+
 
     //Инициализация при загрузке формы
     @Override
@@ -114,9 +116,18 @@ public class FormController implements Initializable {
         tableGasService.setCellValueFactory(new PropertyValueFactory<>("gasService"));
     }
 
+    @FXML
+    protected void onSelected(){
+        //System.out.println("Выбрано");
+    }
+
     @FXML //Обработка кнопки "Сохранить результат"
     protected void onSaveButtonClick() throws IOException {
-
+        if(tableTemplate.getSelectionModel().getSelectedIndex() < 1 || templateText.getText() == ""){
+            onSaveText.setText(" Загрузите таблицу данных и шаблон!");
+            return;
+        }else
+        this.replace();
     }
 
     @FXML //Обработка кнопки "Загрузить шаблон"
@@ -129,34 +140,37 @@ public class FormController implements Initializable {
         this.tableLoad();
     }
     //Загрузка таблицы
-    @FXML
     private void tableLoad() {
         // Открытие нового докусента Exel (только первый лист!)
         if (tableTemplate.getItems() != null) tableTemplate.getItems().clear();
         ExcelDocument exel = new ExcelDocument();
-        dataTemplate = exel.readRow(0);
-        this.id = 1;
-        this.firstName = dataTemplate.get(0);
-        this.secondName = dataTemplate.get(1);
-        this.fathersName = dataTemplate.get(2);
-        this.birthDate = dataTemplate.get(3);
-        this.birthPlace = dataTemplate.get(4);
-        this.flat = dataTemplate.get(5);
-        this.square = dataTemplate.get(6);
-        this.sertNumber = dataTemplate.get(7);
-        this.regDate = dataTemplate.get(8);
-        this.passportSerie = dataTemplate.get(9);
-        this.passportNumber = dataTemplate.get(10);
-        this.passportOutput = dataTemplate.get(11);
-        this.passportCode = dataTemplate.get(12);
-        this.regAdress = dataTemplate.get(13);
-        this.liveAdress = dataTemplate.get(14);
-        this.phone = dataTemplate.get(15);
-        this.mail = dataTemplate.get(16);
-        this.gasService = dataTemplate.get(17);
+        int row = 0;
+        while (exel.readRow(row, rowSize) != null){
+            dataTemplate = exel.readRow(row,rowSize);
+            this.id = row;
+            this.firstName = dataTemplate.get(0);
+            this.secondName = dataTemplate.get(1);
+            this.fathersName = dataTemplate.get(2);
+            this.birthDate = dataTemplate.get(3);
+            this.birthPlace = dataTemplate.get(4);
+            this.flat = dataTemplate.get(5);
+            this.square = dataTemplate.get(6);
+            this.sertNumber = dataTemplate.get(7);
+            this.regDate = dataTemplate.get(8);
+            this.passportSerie = dataTemplate.get(9);
+            this.passportNumber = dataTemplate.get(10);
+            this.passportOutput = dataTemplate.get(11);
+            this.passportCode = dataTemplate.get(12);
+            this.regAdress = dataTemplate.get(13);
+            this.liveAdress = dataTemplate.get(14);
+            this.phone = dataTemplate.get(15);
+            this.mail = dataTemplate.get(16);
+            this.gasService = dataTemplate.get(17);
 
-        initData();
-        tableTemplate.setItems(opData);
+            initData();
+            tableTemplate.setItems(opData);
+            row++;
+        }
     }
 
     private void initData() {
@@ -189,7 +203,18 @@ public class FormController implements Initializable {
     }
 
     public void replace() {
-        doc.getDocFromFile();
+        //doc.getDocFromFile();
+        onSaveText.setText(" Документ создан");
+        int idSelected = tableTemplate.getSelectionModel().getSelectedIndex();
+        String[] tempRow = new String[rowSize];
+        String[] targRow = new String[rowSize];
+        for (int i = 0; i < rowSize; i++){
+            tempRow[i] = tableTemplate.getColumns().get(i).getCellData(0).toString();
+            targRow[i] = tableTemplate.getColumns().get(i).getCellData(idSelected).toString();
+            System.out.println(tempRow[i]+"   "+targRow[i]);
+        }
+        //doc.replaceAndWrite();
+        System.out.println();
     }
 
     public String readSource() {
