@@ -35,7 +35,7 @@ public class FormController implements Initializable {
     private String gasService;
 
     @FXML
-    public Label numberLabel;
+    public Label onSaveText;
     @FXML
     public TableView<Accaunt> tableTemplate;
     @FXML
@@ -91,6 +91,7 @@ public class FormController implements Initializable {
     private ArrayList<String> dataList;
     private int rowSize = 18;
 
+
     //Инициализация при загрузке формы
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -115,9 +116,18 @@ public class FormController implements Initializable {
         tableGasService.setCellValueFactory(new PropertyValueFactory<>("gasService"));
     }
 
+    @FXML
+    protected void onSelected(){
+        //System.out.println("Выбрано");
+    }
+
     @FXML //Обработка кнопки "Сохранить результат"
     protected void onSaveButtonClick() throws IOException {
-
+        if(tableTemplate.getSelectionModel().getSelectedIndex() < 1 || templateText.getText() == ""){
+            onSaveText.setText(" Загрузите таблицу данных и шаблон!");
+            return;
+        }else
+        this.replace();
     }
 
     @FXML //Обработка кнопки "Загрузить шаблон"
@@ -130,7 +140,6 @@ public class FormController implements Initializable {
         this.tableLoad();
     }
     //Загрузка таблицы
-    @FXML
     private void tableLoad() {
         // Открытие нового докусента Exel (только первый лист!)
         if (tableTemplate.getItems() != null) tableTemplate.getItems().clear();
@@ -162,7 +171,6 @@ public class FormController implements Initializable {
             tableTemplate.setItems(opData);
             row++;
         }
-
     }
 
     private void initData() {
@@ -195,7 +203,18 @@ public class FormController implements Initializable {
     }
 
     public void replace() {
-        doc.getDocFromFile();
+        //doc.getDocFromFile();
+        onSaveText.setText(" Документ создан");
+        int idSelected = tableTemplate.getSelectionModel().getSelectedIndex();
+        String[] tempRow = new String[rowSize];
+        String[] targRow = new String[rowSize];
+        for (int i = 0; i < rowSize; i++){
+            tempRow[i] = tableTemplate.getColumns().get(i).getCellData(0).toString();
+            targRow[i] = tableTemplate.getColumns().get(i).getCellData(idSelected).toString();
+            System.out.println(tempRow[i]+"   "+targRow[i]);
+        }
+        //doc.replaceAndWrite();
+        System.out.println();
     }
 
     public String readSource() {

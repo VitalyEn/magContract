@@ -11,9 +11,12 @@
     <ToolBar prefHeight="40.0" prefWidth="200.0">
         <Button fx:id="templateButton" mnemonicParsing="false" onAction="#onTemplateButtonClick" text="Выбор шаблона DOCX" />
         <Button fx:id="listButton" mnemonicParsing="false" onAction="#onListButtonClick" text="Выбор списка CSV" />
+       <Button fx:id="saveButton" alignment="BOTTOM_RIGHT" cacheShape="false" centerShape="false" focusTraversable="false" onAction="#onSaveButtonClick" text="Сохранить документ" />
+   
+       <Label fx:id="onSaveText" />
       <!--<Button fx:id="excelTest" mnemonicParsing="false" onAction="#onExcelTest" text="Excel Test" />-->
     </ToolBar>
-   <TableView fx:id="tableTemplate" prefHeight="200.0" prefWidth="200.0">
+   <TableView fx:id="tableTemplate" onMouseClicked="#onSelected" prefHeight="200.0" prefWidth="200.0">
       <columnResizePolicy>
          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
       </columnResizePolicy>
@@ -39,16 +42,8 @@
           <TableColumn fx:id="tableGasService" prefWidth="75.0" text="ТО по газу" />
       </columns>
    </TableView>
-   <ButtonBar prefHeight="40.0" prefWidth="200.0">
-     <buttons>
-         <Label fx:id="numberLabel" alignment="TOP_LEFT" text="Запись №1" />
-     </buttons>
-   </ButtonBar>
    <Label text="Шаблон" />
    <TextArea fx:id="templateText" />
    <Label text="Готовый документ" />
    <TextArea fx:id="resultText" prefHeight="200.0" prefWidth="200.0" />
-    <Button fx:id="saveButton" alignment="BOTTOM_RIGHT" cacheShape="false" centerShape="false" focusTraversable="false" onAction="#onSaveButtonClick" text="Сохранить документ" />
-
-    <Label fx:id="welcomeText" />
 </VBox>
