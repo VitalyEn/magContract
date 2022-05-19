@@ -51,7 +51,7 @@ public class WordDocument extends FileIo{
         return this.docText;
     }
 
-    public String replaceAndWrite(String[] template, String[] target,int fileNumber) throws IOException {
+    public String replaceAndWrite(String[] template, String[] target) throws IOException {
         //System.out.println(docFileName);
         try (XWPFDocument doc = new XWPFDocument(
                 Files.newInputStream(Paths.get(this.docFileName)))
@@ -62,20 +62,21 @@ public class WordDocument extends FileIo{
             for (XWPFParagraph xwpfParagraph : xwpfParagraphList) {
                 for (XWPFRun xwpfRun : xwpfParagraph.getRuns()) {
                     String docText = xwpfRun.getText(0);
-
+//System.out.println(xwpfParagraph.getText());
                     //replacement and setting position
                     //System.out.println(template.length+" "+target.length);
-                    for (int i = 0; i < target.length; i++) {
+                    for (int i = 1; i < target.length; i++) {
                         if(docText!=null) {
-                            docText = docText.replace(template[i], target[i]);
                             //System.out.println(docText);
+                            docText = docText.replaceAll(template[i], target[i]);
+                           // System.out.println(docText);
                             xwpfRun.setText(docText, 0);
                         }
                     }
                 }
             }
             // save the docs
-            try (FileOutputStream out = new FileOutputStream("contract "+fileNumber+".docx")) {
+            try (FileOutputStream out = new FileOutputStream("contract "+target[1]+".docx")) {
                 doc.write(out);
             }
             XWPFWordExtractor xwpfWordExtractor = new XWPFWordExtractor(doc);

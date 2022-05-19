@@ -43,7 +43,10 @@
       </columns>
    </TableView>
    <Label text="Шаблон" />
-   <TextArea fx:id="templateText" />
+   <TextArea fx:id="templateText" scaleShape="false" wrapText="true">
+      <opaqueInsets>
+         <Insets />
+      </opaqueInsets></TextArea>
    <Label text="Готовый документ" />
-   <TextArea fx:id="resultText" prefHeight="200.0" prefWidth="200.0" />
+   <TextArea fx:id="resultText" prefHeight="200.0" prefWidth="200.0" scaleShape="false" wrapText="true" />
 </VBox>
