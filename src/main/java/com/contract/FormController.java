@@ -204,17 +204,24 @@ public class FormController implements Initializable {
 
     public void replace() {
         //doc.getDocFromFile();
-        onSaveText.setText(" Документ создан");
+
         int idSelected = tableTemplate.getSelectionModel().getSelectedIndex();
         String[] tempRow = new String[rowSize];
         String[] targRow = new String[rowSize];
         for (int i = 0; i < rowSize; i++){
-            tempRow[i] = tableTemplate.getColumns().get(i).getCellData(0).toString();
-            targRow[i] = tableTemplate.getColumns().get(i).getCellData(idSelected).toString();
-            System.out.println(tempRow[i]+"   "+targRow[i]);
+            tempRow[i] = tableTemplate.getColumns().get(i).getCellData(0).toString().trim();
+            targRow[i] = tableTemplate.getColumns().get(i).getCellData(idSelected).toString().trim();
+            //System.out.println(tempRow[i]+"   "+targRow[i]);
         }
-        //doc.replaceAndWrite();
-        System.out.println();
+
+        try {
+            resultText.setText(doc.replaceAndWrite(tempRow, targRow));
+            onSaveText.setText(" Документ создан");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //System.out.println();
     }
 
     public String readSource() {
